@@ -19,6 +19,7 @@ MEMTYPE = flash
 
 # Toolchain
 CC = $(AVRGCC_BIN_DIR)/avr-gcc
+CPPCHECK = cppcheck
 
 # Files
 TARGET = $(BIN_DIR)/blink
@@ -63,7 +64,7 @@ $(OBJ_DIR)/%.o: %.c
 	@echo "...done! \n"
 
 # Phonies
-.PHONY: all clean flash
+.PHONY: all clean flash cppcheck
 
 all: $(TARGET) 
 
@@ -75,3 +76,9 @@ flash:
 	@echo "Flashing..."
 	avrdude $(MEMFLAGS) $(PROFLAGS) $(MCUFLAGS) -Uflash:w:$(TARGET).hex
 	@echo "...done!"
+
+cppcheck:
+	@$(CPPCHECK) --quiet --enable=all --error-exitcode=1 \
+	--inline-suppr \
+	--suppress=missingInclude \
+	$(SOURCES) 
