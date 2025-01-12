@@ -2,7 +2,7 @@
 # The programmer is already on the development board.
 
 # Directories
-AVRGCC_ROOT_DIR = /home/karzanm/dev/tools/atmega328-gcc
+AVRGCC_ROOT_DIR = /home/karzan/dev/tools/avr-gnu-gcc
 AVRGCC_BIN_DIR = $(AVRGCC_ROOT_DIR)/bin
 AVRGCC_INCLUDE_DIR = $(AVRGCC_ROOT_DIR)/avr/include
 PORT_DIR = /home/kazanm/dev/ttyACM0
@@ -46,7 +46,7 @@ MEMFLAGS = -F -V
 ## Flashing
 $(TARGET).hex: $(TARGET).elf
 	@echo "Generating flashable hex file..."
-	avr-objcopy -O ihex $< $@
+	avr-objcopy -O ihex -j .text -j .data $< $@
 	@echo "...done!"
 
 ## Linking
