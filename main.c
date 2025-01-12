@@ -6,7 +6,7 @@
  *  SW is blocking, while holding down SW the program keeps LEDs ON
  *  CLK and DT connected to pulldown resistor (50kOhm)
  *  SW connected to pullup resistor (50kOhm)
- * 
+ *  DATASHEET: https://www.handsontec.com/dataspecs/module/Rotary%20Encoder.pdf 
  */
 
 
