@@ -50,17 +50,17 @@ $(TARGET).hex: $(TARGET).elf
 	@echo "...done!"
 
 ## Linking
-$(TARGET).elf: $(OBJ_DIR)/main.o
+$(TARGET).elf: $(OBJ_DIR)/main.o $(OBJ_DIR)/GPIO.o
 	@mkdir -p $(dir $@)
 	@echo "Linking..."
-	$(CC) $(LDFLAGS) -o $@ $<
+	$(CC) $(LDFLAGS) -o $@ $^
 	@echo " ...done! \n"
 
 ## Compiling
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	@echo "Compiling..."
-	$(CC) $(CFLAGS) -c -o $@  $^
+	$(CC) $(CFLAGS) -c -o $@  $<
 	@echo "...done! \n"
 
 # Phonies
