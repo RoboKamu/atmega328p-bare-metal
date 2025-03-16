@@ -9,7 +9,8 @@
  *  DATASHEET: https://www.handsontec.com/dataspecs/module/Rotary%20Encoder.pdf 
  */
 
-#include "GPIO.h"
+
+#include "avr/io.h"             // include the IO definitions for the defined microcontroller
 
 #define LED_G   PORTB3
 #define LED_Y   PORTB2
@@ -19,35 +20,34 @@
 
 int main(void){
     // init output pins 3-2 (pins are input by default)
-    gpio_init_multi_pin(&DDRB, GPIO_MODE_OUT, GPIO_PULLUP_OFF, 2, LED_G, LED_Y);
-    gpio_init(&DDRB, GPIO_MODE_IN, SW, GPIO_PULLUP_ON);
-
-    uint8_t pinALast = gpio_read(&PINB, CLK);
-    uint8_t aVal;
+    DDRB = (1 << LED_G) | (1 << LED_Y);
+    
+    unsigned pinALast = PINB & (1 << CLK);      // read initial value for cmp
+    unsigned aVal;
     int8_t bCW=-1;
 
     while(1){
-        aVal = gpio_read(&PINB, CLK);             // read new CLK
-        if (aVal != pinALast && aVal == 0) {      // change in state occured (falling edge)
-            if (gpio_read(&PINB, DT) != aVal)     // ..CLK changed first 
-                bCW = 1;                          // ....clockwise!
-            else {                                // ..DT changed fist
-                bCW = 0;                          // ....C-Clocwise!
+        aVal = PINB & (1 << CLK);             // read new CLK
+        if (aVal != pinALast && aVal == 0) {  // change in state occured (falling edge)
+            if ((PINB & (1 << DT)) != aVal)   // ..CLK changed first 
+                bCW = 1;                      // ....clockwise!
+            else {                            // ..DT changed fist
+                bCW = 0;                      // ....C-Clocwise!
             }
 
             if (bCW==1){                      // CW...  
-                gpio_write(&PORTB, LED_G, 1);
-                gpio_write(&PORTB, LED_Y, 0);
+                PORTB |= (1 << LED_G);        // ...turn green LED ON
+                PORTB &= ~(1 << LED_Y);       // ...and yellow off!!
             } 
             else if (bCW==0) {                // CCW... 
-                gpio_write(&PORTB, LED_Y, 1);
-                gpio_write(&PORTB, LED_G, 0);
+                PORTB |= (1 << LED_Y);        // ...turn yellow LED ON
+                PORTB &= ~(1 << LED_G);       // ...and green off!!
             }
         }
-        if (gpio_read(&PINB, SW) == 0){         // switch pushed, both LEDS on 
+        if ((PINB & (1 << SW)) == 0){         // switch pushed, both LEDS on 
             do{                               // keep on while pushed
                 PORTB |= (1 << LED_G) | (1 << LED_Y);
-            } while (gpio_read(&PINB, SW) == 0);
+            } while ((PINB & (1 << SW)) == 0);
             PORTB = 0x00;   // reset LEDs after SW open again
         }
 
