@@ -43,7 +43,7 @@ void gpio_deinit(volatile uint8_t *ddr, gpio_mode_t dir, uint8_t pin, gpio_state
 
 /**
  * Read GPIO pin value
- * @param port PINx
+ * @param port pointer to PINx
  * @param pin PINxn
  * @retval uint8_t 
  */
@@ -51,7 +51,7 @@ uint8_t gpio_read(volatile uint8_t *port, uint8_t pin);
 
 /**
  * Write to GPIO pin
- * @param port PINx
+ * @param port pointer to PINx
  * @param pin PINxn
  * @param val 1 for HIGH, 0 for LOW
  */

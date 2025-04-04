@@ -22,7 +22,7 @@ CC = $(AVRGCC_BIN_DIR)/avr-gcc
 CPPCHECK = cppcheck
 
 # Files
-TARGET = $(BIN_DIR)/blink
+TARGET = $(BIN_DIR)/target
 
 SOURCES = main.c
 # 	\ append src.c for another source file

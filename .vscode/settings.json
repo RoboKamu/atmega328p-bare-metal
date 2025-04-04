@@ -4,6 +4,7 @@
         "sfr_defs.h": "c",
         "iom328p.h": "c",
         "iom3250a.h": "c",
-        "delay.h": "c"
+        "delay.h": "c",
+        "gpio.h": "c"
     }
 }
