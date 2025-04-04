@@ -5,4 +5,4 @@ I use this as a learning objective and only use the avr/io.h file for pin defini
 
 Find Guides explaining *why* the code works in "detail" in the Guides/ folder with Markdown files.  
 
-The code for the microcontroller is flashed using AVRDUDE, compiled with GCC (avr-GCC), and using arduino UNO REV3 board as programmer. Code is written using toolchain + Makefile, no IDE except for VSCODE as a text editor. 
+The code for the microcontroller is flashed using AVRDUDE, compiled with GCC (avr-GCC), and using arduino UNO REV3 board as programmer. Development is done using toolchain + Makefile, no IDE except for VSCODE as a text editor. 
