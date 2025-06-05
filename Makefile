@@ -9,6 +9,7 @@ PORT_DIR = /home/kazanm/dev/ttyACM0
 BUILD_DIR = build
 OBJ_DIR = $(BUILD_DIR)/obj
 BIN_DIR = $(BUILD_DIR)/bin
+LIB_DIR = lib
 
 # AVRDUDE  variables
 PROGRAMMER = arduino
@@ -24,17 +25,25 @@ CPPCHECK = cppcheck
 # Files
 TARGET = $(BIN_DIR)/target
 
-SOURCES = main.c
-# 	\ append src.c for another source file
+# Includes 
+LIB_DIRS = $(wildcard $(LIB_DIR)/*/include)
 
-OBJECT_NAMES = $(SOURCES:.c=.o)
+#SOURCES = main.c
+# 	\ append src.c for another source file
+C_SOURCES = \
+$(wildcard $(LIB_DIR)/*.c) \
+$(wildcard $(LIB_DIR)/*/src/*.c) \
+$(wildcard ./*.c)
+
+OBJECT_NAMES = $(C_SOURCES:.c=.o)
 OBJECTS = $(patsubst %, $(OBJ_DIR)/%, $(OBJECT_NAMES))
 
 # Flags
 ## compiler
 MCU = atmega328p
 WFLAGS = -Wall -Wextra -Werror -Wshadow
-CFLAGS = -mmcu=$(MCU) -g -Os -DF_CPU=16000000U $(WFLAGS) $(addprefix -I, $(AVRGCC_INCLUDE_DIR)) 
+CFLAGS = -mmcu=$(MCU) -g -Os -DF_CPU=16000000U $(WFLAGS) $(addprefix -I, $(AVRGCC_INCLUDE_DIR))
+CFLAGS += $(addprefix -I, $(LIB_DIRS))
 LDFLAGS = -g -mmcu=$(MCU) 
 #$(addprefix -L,$(AVRGCC_INCLUDE_DIR))
 ##  linker
@@ -50,7 +59,7 @@ $(TARGET).hex: $(TARGET).elf
 	@echo "...done!"
 
 ## Linking
-$(TARGET).elf: $(OBJ_DIR)/main.o $(OBJ_DIR)/GPIO.o
+$(TARGET).elf: $(OBJECTS)
 	@mkdir -p $(dir $@)
 	@echo "Linking..."
 	$(CC) $(LDFLAGS) -o $@ $^
