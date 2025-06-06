@@ -45,18 +45,18 @@ void gpio_deinit(volatile uint8_t *ddr, gpio_mode_t dir, uint8_t pin, gpio_state
         if (pu_state == GPIO_PULLUP_OFF) return; 
 
         if (*ddr == DDRB) {
-            PORTB |= (0 << pin);
+            PORTB &= ~(1 << pin);
         }
         else if (*ddr == DDRC){
-            PORTC |= (0 << pin);
+            PORTC &= ~(1 << pin);
         }
         else if (*ddr== DDRD){
-            PORTC |= (0 << pin);
+            PORTC &= ~(1 << pin);
         }
         return; 
     }
-    // turn the output into input 
-    *ddr |= (0 << pin);
+    // reset direction to original (input) 
+    *ddr &= ~(1 << pin);
 }
 
 
