@@ -1,9 +1,5 @@
 #include "gpio.h"
 
-
-void delay_ms();
-void delay_us();
-
 int main(){
 	gpio_init(&DDRB, GPIO_MODE_OUT, PORTB5, GPIO_PULLUP_OFF);
 	while(1){
