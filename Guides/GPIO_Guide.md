@@ -67,7 +67,7 @@ Then `*()` dereferences the pointer so that DDRB can be used like a variable, wh
 
 It comes down to how data memory is stored on the microcontroller. From section “8-3. Data Memory Map” in the datasheet:
 
-![Data Memory](../images/image.png)
+![Data Memory](../Images/image.png)
 
 Here the 32 general purpose registers refer to the CPU registers for logic/arithmetic instructions. For example when writing assembly, code like `load immediate r0, 1` → uses CPU registers. To avoid messing with these registers an offset of 0x20 is passed, here is the beginning of the I/O ports.
 
