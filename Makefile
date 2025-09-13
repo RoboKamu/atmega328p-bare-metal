@@ -1,5 +1,5 @@
-# The following makefile is used to build a project on atmega382p, which is mounted on an arduino uno
-# The programmer is already on the development board.
+# Makefile for ATmega328P on Arduino Uno Rev 3.
+# For programming on the Uno, uploads use the bootloader via USB-serial.
 
 # Directories
 AVRGCC_ROOT_DIR = /home/karzan/dev/tools/avr-gnu-gcc
